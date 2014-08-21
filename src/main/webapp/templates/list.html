@@ -1,0 +1,31 @@
+<div class="jumbotron">
+    <h1>Quick Record</h1>
+    <div>
+        <button id="quick_check-in" type="button" ng-click="addEntry('Come')" class="btn btn-lg btn-success">Check-In</button>
+        <button id="quick_check-out" type="button" ng-click="addEntry('Leave')" class="btn btn-lg btn-danger">Check-Out</button>
+        <button id="quick_add-step" type="button" ng-click="addEntry('Marker')" class="btn btn-lg btn-warning">Add Step</button>
+    </div>
+</div>
+
+<div class="row" ng-controller="EntryController">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <th class="col-xs-2">Day</th>
+            <th class="col-xs-1">Time</th>
+            <th class="col-xs-1">Action</th>
+            <th class="col-xs-7">Description</th>
+            <th class="col-xs-1">Action</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="entry in entries">
+                <td>{{ entry.entryDate | date : 'shortDate'}}</td> <!-- Relative time could be better here -->
+                <td>{{ entry.entryDate | date : 'H:mm'}}</td>
+                <td>{{ entry.type }}</td>
+                <td>{{ entry.description }}</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry(entry._links.self.href)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
