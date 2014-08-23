@@ -2,8 +2,8 @@
     <h1>Quick Record</h1>
     <div>
         <button id="quick_check-in" type="button" ng-click="addEntry('Come')" class="btn btn-lg btn-success">Check-In</button>
-        <button id="quick_check-out" type="button" ng-click="addEntry('Leave')" class="btn btn-lg btn-danger">Check-Out</button>
-        <button id="quick_add-step" type="button" ng-click="addEntry('Marker')" class="btn btn-lg btn-warning">Add Step</button>
+        <button id="quick_check-out" type="button" ng-click="addEntry('Leave')" disabled="disabled" class="btn btn-lg btn-danger">Check-Out</button>
+        <button id="quick_add-step" type="button" ng-click="addEntry('Marker')" disabled="disabled" class="btn btn-lg btn-warning">Add Step</button>
     </div>
 </div>
 
@@ -13,17 +13,31 @@
             <th class="col-xs-2">Day</th>
             <th class="col-xs-1">Time</th>
             <th class="col-xs-1">Action</th>
-            <th class="col-xs-7">Description</th>
-            <th class="col-xs-1">Action</th>
+            <th class="col-xs-6">Description</th>
+            <th class="col-xs-2">Action</th>
         </thead>
         <tbody>
-            <tr ng-repeat="entry in entries">
-                <td>{{ entry.entryDate | date : 'shortDate'}}</td> <!-- Relative time could be better here -->
-                <td>{{ entry.entryDate | date : 'H:mm'}}</td>
-                <td>{{ entry.type }}</td>
-                <td>{{ entry.description }}</td>
+            <tr class="form-group form-group-sm form-horizontal" ng-repeat="entry in entries">
                 <td>
-                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry(entry._links.self.href)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                    <span ng-hide="entry.editMode"><time datetime="{{ entry.entryDate }}">{{ entry.entryDate | date : 'shortDate'}}</time></span>
+                    <input class="form-control" type="datetime" ng-model="entry.entryDate" ng-show="entry.editMode">
+                </td> <!-- Relative time could be better here -->
+                <td>
+                    <span ng-hide="entry.editMode">{{ entry.entryDate | date : 'H:mm'}}</span>
+                </td>
+                <td>
+                    <span class="col-xs-6">{{ entry.type }}</span>
+                    <!--<select class="form-control" ng-show="entry.editMode" ng-options="entry.type for type in types">-->
+                    <!--</select>-->
+                </td>
+                <td>
+                    <span ng-hide="entry.editMode">{{ entry.description }}</span>
+                    <input type="text" class="form-control" ng-model="entry.description" ng-show="entry.editMode">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-warning btn-sm" ng-hide="entry.editMode" ng-click="editEntry(entry)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    <button type="button" class="btn btn-success btn-sm" ng-show="entry.editMode" ng-click="saveEntry(entry)"><span class="glyphicon glyphicon-check"></span> Save</button>
+                    <button type="button" class="btn btn-danger btn-sm" ng-hide="entry.editMode" ng-click="deleteEntry(entry._links.self.href)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                 </td>
             </tr>
         </tbody>

@@ -4,5 +4,6 @@ spring:
 
   datasource:
     driverClassName: org.h2.Driver
-    url: jdbc:h2:file:./target/punch-clock
+    url: jdbc:h2:mem:punch-clock
     username: sa
+    password: sa

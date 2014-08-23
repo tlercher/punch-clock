@@ -31,4 +31,11 @@ controllers.controller('EntryController', ['$scope', '$route', '$http', function
         });
         $route.reload();
     };
+
+    $scope.editEntry = function(entry) {
+        entry.editMode = true;
+    }
+    $scope.saveEntry = function(entry) {
+        entry.editMode = false;
+    }
 }]);
