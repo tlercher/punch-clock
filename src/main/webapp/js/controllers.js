@@ -3,10 +3,11 @@ var controllers = angular.module('punchClockControllers', []);
 
 controllers.controller('EntryController', ['$scope', '$route', '$http', function($scope, $route, $http) {
     $scope.entries = [];
+    $scope.types = [];
 
-    $http.get('/entrys/?sort=entryDate,DESC').success(function(data, status, headers, config) {
-        if(data._embedded) {
-            $scope.entries =  data._embedded.entrys;
+    $http.get('/entrys/').success(function(data, status, headers, config) {
+        if(data.length > 0) {
+            $scope.entries =  data;
 
             var type = $scope.entries[0].type;
 
@@ -16,8 +17,12 @@ controllers.controller('EntryController', ['$scope', '$route', '$http', function
         }
     });
 
-    $scope.deleteEntry = function(url) {
-        $http.delete(url).success(function(data, status, headers, config) {
+    $http.get('/entrys/types/').success(function(data, status, headers, config) {
+        $scope.types = data;
+    });
+
+    $scope.deleteEntry = function(entry) {
+        $http.delete('/entrys/' + entry.id).success(function(data, status, headers, config) {
             $route.reload();
         });
     };
@@ -37,5 +42,10 @@ controllers.controller('EntryController', ['$scope', '$route', '$http', function
     }
     $scope.saveEntry = function(entry) {
         entry.editMode = false;
+        $http.post('/entrys/' + entry.id, entry, {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        });
     }
 }]);

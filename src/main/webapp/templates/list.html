@@ -20,15 +20,15 @@
             <tr class="form-group form-group-sm form-horizontal" ng-repeat="entry in entries">
                 <td>
                     <span ng-hide="entry.editMode"><time datetime="{{ entry.entryDate }}">{{ entry.entryDate | date : 'shortDate'}}</time></span>
-                    <input class="form-control" type="datetime" ng-model="entry.entryDate" ng-show="entry.editMode">
-                </td> <!-- Relative time could be better here -->
+                    <quick-datepicker ng-model="entry.entryDate" ng-show="entry.editMode"></quick-datepicker>
+                </td>
                 <td>
                     <span ng-hide="entry.editMode">{{ entry.entryDate | date : 'H:mm'}}</span>
                 </td>
                 <td>
-                    <span class="col-xs-6">{{ entry.type }}</span>
-                    <!--<select class="form-control" ng-show="entry.editMode" ng-options="entry.type for type in types">-->
-                    <!--</select>-->
+                    <span ng-hide="entry.editMode" class="col-xs-6">{{ entry.type }}</span>
+                    <select class="form-control" ng-show="entry.editMode" ng-model="entry.type" ng-options="type for type in types">
+                    </select>
                 </td>
                 <td>
                     <span ng-hide="entry.editMode">{{ entry.description }}</span>
@@ -37,7 +37,7 @@
                 <td>
                     <button type="button" class="btn btn-warning btn-sm" ng-hide="entry.editMode" ng-click="editEntry(entry)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                     <button type="button" class="btn btn-success btn-sm" ng-show="entry.editMode" ng-click="saveEntry(entry)"><span class="glyphicon glyphicon-check"></span> Save</button>
-                    <button type="button" class="btn btn-danger btn-sm" ng-hide="entry.editMode" ng-click="deleteEntry(entry._links.self.href)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                    <button type="button" class="btn btn-danger btn-sm" ng-hide="entry.editMode" ng-click="deleteEntry(entry)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                 </td>
             </tr>
         </tbody>
