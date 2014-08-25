@@ -37,6 +37,7 @@
                 <td>
                     <button type="button" class="btn btn-warning btn-sm" ng-hide="entry.editMode" ng-click="editEntry(entry)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                     <button type="button" class="btn btn-success btn-sm" ng-show="entry.editMode" ng-click="saveEntry(entry)"><span class="glyphicon glyphicon-check"></span> Save</button>
+                    <button type="button" class="btn btn-primary btn-sm" ng-show="entry.editMode" ng-click="cancelEdit(entry)">Cancel</button>
                     <button type="button" class="btn btn-danger btn-sm" ng-hide="entry.editMode" ng-click="deleteEntry(entry)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                 </td>
             </tr>

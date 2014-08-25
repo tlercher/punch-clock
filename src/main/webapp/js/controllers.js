@@ -40,6 +40,17 @@ controllers.controller('EntryController', ['$scope', '$route', '$http', function
     $scope.editEntry = function(entry) {
         entry.editMode = true;
     }
+    $scope.cancelEdit = function(entry) {
+        entry.editMode = false;
+        $http.get('/entrys/' + entry.id, entry, {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        }).success(function(data) {
+            entry = data;
+            $route.reload();
+        });
+    }
     $scope.saveEntry = function(entry) {
         entry.editMode = false;
         $http.post('/entrys/' + entry.id, entry, {
